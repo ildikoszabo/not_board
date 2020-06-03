@@ -6,21 +6,21 @@ export const usePieces = () => {
   const [selectedPieceName, setSelectedPieceName] = useState("cathedral");
   const [availablePieces, setAvailablePieces] = useState(PIECES);
 
-  const handlePieceSelection = useCallback(event => {
+  const handlePieceSelection = useCallback((event) => {
     setSelectedPieceName(event.target.value);
   });
 
-  const rotatePiece = useCallback((pieceName,dir) => {
+  const rotatePiece = useCallback((pieceName, dir) => {
     let selectedKey = getSelectedPieceKey(pieceName);
     let selectedValue = availablePieces[selectedKey];
 
     // Make the rows to become cols (transpose)
     const mtrx = selectedValue.shape.map((_, index) =>
-      selectedValue.shape.map(column => column[index])
+      selectedValue.shape.map((column) => column[index])
     );
     // Reverse each row to get a rotaded matrix
     if (dir > 0) {
-      selectedValue.shape = mtrx.map(row => row.reverse());
+      selectedValue.shape = mtrx.map((row) => row.reverse());
     } else {
       selectedValue.shape = mtrx.reverse();
     }
@@ -28,24 +28,58 @@ export const usePieces = () => {
     setAvailablePieces({ ...availablePieces, [selectedKey]: selectedValue });
   }, []);
 
-  
-  const getSelectedPieceKey = (pieceName) =>{
-    let selectedKey = Object.keys(availablePieces).find(key => {
+  const getSelectedPieceKey = (pieceName) => {
+    let selectedKey = Object.keys(availablePieces).find((key) => {
       if (availablePieces[key].name == pieceName) {
         return availablePieces[key];
       }
     });
-    return selectedKey;   
-  }
+    return selectedKey;
+  };
+
+  const addPieceToPieces = (pieceKey) => {
+    let newPiece;
+    if (availablePieces[pieceKey]) {
+      newPiece = availablePieces[pieceKey];
+      newPiece.nr = newPiece.nr + 1;
+    } else {
+      newPiece = PIECES[pieceKey];
+      newPiece.nr = 1;
+    }
+
+    setAvailablePieces({
+      ...availablePieces,
+      [pieceKey]: newPiece,
+    });
+  };
+
+  const removePieceFromPieces = (selectedKey) => {
+    let newPiece = availablePieces[selectedKey];
+    newPiece.nr = newPiece.nr - 1;
+    if (newPiece.nr == 0) {
+      let nextSelectedPieceKey = Object.keys(availablePieces).find(
+        (key) => availablePieces[key].nr > 0
+      );
+
+      if (nextSelectedPieceKey) {
+        setSelectedPieceName(availablePieces[nextSelectedPieceKey].name);
+      }
+    }
+    setAvailablePieces({ ...availablePieces, [selectedKey]: newPiece });
+  };
+
+  const handleCardSelection = (selectedKey) => {
+    setSelectedPieceName(PIECES[selectedKey].name);
+  };
 
   return [
     selectedPieceName,
-    setSelectedPieceName,
     availablePieces,
-    setAvailablePieces,
     handlePieceSelection,
     rotatePiece,
     getSelectedPieceKey,
-    PIECES
+    removePieceFromPieces,
+    addPieceToPieces,
+    handleCardSelection,
   ];
 };

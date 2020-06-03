@@ -1,10 +1,10 @@
 import React from "react";
-import {  IconButton } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwadIcon from "@material-ui/icons/ArrowForward";
 
-export const Controls = props => {
+export const Controls = (props) => {
   return (
     <div>
       <IconButton
@@ -12,6 +12,7 @@ export const Controls = props => {
         onClick={() => {
           props.onClick(-1);
         }}
+        color="primary"
       >
         <ArrowBackIcon fontSize="inherit" />
       </IconButton>
@@ -20,6 +21,7 @@ export const Controls = props => {
         onClick={() => {
           props.onClick(1);
         }}
+        color="primary"
       >
         <ArrowForwadIcon fontSize="inherit" />
       </IconButton>

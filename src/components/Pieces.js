@@ -4,36 +4,62 @@ import { Controls } from "./Controls";
 
 export const PiecesToPlay = ({
   selectedPieceName,
-  setSelectedPieceName,
   availablePieces,
-  setAvailablePieces,
   handlePieceSelection,
-  rotatePiece
+  rotatePiece,
+  handleCardSelection,
 }) => {
   return (
-    <div>
-      <div>
-        <Controls onClick={dir => rotatePiece(selectedPieceName, dir)} />
-      </div>
-      {Object.keys(availablePieces).map(key => {
+    <div className="table table-cell">
+      {Object.keys(availablePieces).map((key) => {
         return availablePieces[key].nr > 0 ? (
-          <div>
-            <Radio
-              checked={selectedPieceName === availablePieces[key].name}
-              onChange={handlePieceSelection}
-              value={availablePieces[key].name}
-              name="radio-button-demo"
-              inputProps={{ "aria-label": "A" }}
-              color="primary"
-            />
-            <span>{availablePieces[key].name} </span>
-            <span>{availablePieces[key].nr}</span>
-            <div className="table">
+          <div
+            className={
+              selectedPieceName === availablePieces[key].name
+                ? "table-cell card card-selected"
+                : "table-cell card"
+            }
+            onClick={() => {
+              handleCardSelection(key);
+            }}
+          >
+            <div className="card-header">
+              <div>
+                <Radio
+                  checked={selectedPieceName === availablePieces[key].name}
+                  onChange={handlePieceSelection}
+                  value={availablePieces[key].name}
+                  name="radio-button-demo"
+                  inputProps={{ "aria-label": "A" }}
+                  color="primary"
+                  disabled={availablePieces[key].nr == 0}
+                />
+              </div>
+              <div style={{ padding: "5px" }}>
+                <span>{availablePieces[key].name} </span>
+              </div>
+              <div style={{ padding: "10px" }}>
+                <span>Count: {availablePieces[key].nr}</span>
+              </div>
+            </div>
+            <div
+              className="table"
+              style={{
+                width: "100%",
+                height: "50%",
+                display: "flex",
+              }}
+            >
               {mapArrayToGrid(
                 availablePieces[key].shape,
                 "table-cell piece-cell",
                 "table-not-cell"
               )}
+            </div>
+            <div className="card-controls">
+              <Controls
+                onClick={(dir) => rotatePiece(selectedPieceName, dir)}
+              />
             </div>
           </div>
         ) : null;
@@ -43,8 +69,8 @@ export const PiecesToPlay = ({
 };
 
 function mapArrayToGrid(array, className, classNotACell) {
-  var grid = array.map(function(val, i) {
-    return val.map(function(v, index) {
+  var grid = array.map(function (val, i) {
+    return val.map(function (v, index) {
       let d = 100 / array[i].length;
       return v == 0 ? (
         <div style={{ width: `${d}%` }} className={classNotACell}></div>
