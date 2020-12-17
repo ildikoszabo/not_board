@@ -114,6 +114,7 @@ body {
   justify-content: center;
   color: white;
   background-color: #282c34;
+  min-width: 150px;
 }
 
 .card-header {

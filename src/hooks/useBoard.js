@@ -8,19 +8,7 @@ export const useBoard = (prop) => {
     let pieceWidth = pieceMatrix[0].length;
     let pieceHeigth = pieceMatrix.length;
     let boardClone = board.slice(0);
-
-    /* move me somewhere else*/
-    let shift = 0;
-    let row = 0;
-    while (pieceMatrix[row][shift] == 0) {
-      shift++;
-      //no piece cell in this row, go the next one
-      if (shift == pieceHeigth) {
-        shift = 0;
-        row++;
-      }
-    }
-    /* move me somewhere else*/
+    let shift = getShift(pieceMatrix, pieceHeigth);
 
     if (!hasOverlap(pieceMatrix, x, y)) {
       //let row=x, column = y;
@@ -36,8 +24,9 @@ export const useBoard = (prop) => {
               pieceMatrix[i][3]
           );*/
           if (pieceMatrix[i][j] != 0) {
-            if (boardClone[x + i - row][y + j - shift] == 0) {
-              boardClone[x + i - row][y + j - shift] = pieceMatrix[i][j];
+            if (boardClone[x + i - shift.row][y + j - shift.column] == 0) {
+              boardClone[x + i - shift.row][y + j - shift.column] =
+                pieceMatrix[i][j];
             }
             //column = column + 1;
           }
@@ -58,24 +47,12 @@ export const useBoard = (prop) => {
     let pieceWidth = pieceMatrix[0].length;
     let pieceHeigth = pieceMatrix.length;
     let boardClone = board.slice(0);
-
-    /* move me somewhere else*/
-    let shift = 0;
-    let row = 0;
-    while (pieceMatrix[row][shift] == 0) {
-      shift++;
-      //no piece cell in this row, go the next one
-      if (shift == pieceHeigth) {
-        shift = 0;
-        row++;
-      }
-    }
-    /* move me somewhere else*/
+    let shift = getShift(pieceMatrix, pieceHeigth);
 
     for (let i = 0; i < pieceHeigth; i++) {
       for (let j = 0; j < pieceWidth; j++) {
         if (pieceMatrix[i][j] != 0) {
-          if (boardClone[x + i - row][y + j - shift] != 0) {
+          if (boardClone[x + i - shift.row][y + j - shift.column] != 0) {
             return true;
           }
         }
@@ -90,12 +67,13 @@ export const useBoard = (prop) => {
     let pieceWidth = pieceMatrix[0].length;
     let pieceHeigth = pieceMatrix.length;
     let boardClone = board.slice(0);
+    let shift = getShift(pieceMatrix, pieceHeigth);
 
-    for (let i = 0; i < pieceWidth; i++) {
-      for (let j = 0; j < pieceHeigth; j++) {
+    for (let i = 0; i < pieceHeigth; i++) {
+      for (let j = 0; j < pieceWidth; j++) {
         if (pieceMatrix[i][j] != 0) {
-          if (boardClone[x + i][y + j] == pieceKey) {
-            boardClone[x + i][y + j] = 0;
+          if (boardClone[x + i - shift.row][y + j - shift.column] == pieceKey) {
+            boardClone[x + i - shift.row][y + j - shift.column] = 0;
           }
         }
       }
@@ -104,6 +82,24 @@ export const useBoard = (prop) => {
 
   return [board, addPieceToBoard, removePieceFromBoard];
 };
+
+function getShift(pieceMatrix, pieceHeigth) {
+  let shift = {
+    row: 0,
+    column: 0,
+  };
+
+  while (pieceMatrix[shift.row][shift.column] == 0) {
+    shift.column++;
+    //no piece cell in this row, go the next one
+    if (shift.column == pieceHeigth) {
+      shift.column = 0;
+      shift.row++;
+    }
+  }
+
+  return shift;
+}
 
 function createInitBoard() {
   var arr = [];
