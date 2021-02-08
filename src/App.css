@@ -70,7 +70,7 @@ body {
   }
 }
 
-.piece-cell {
+.piece-cell-dark {
   border: solid white;
   background-color: rgba(119, 89, 89, 0.8);
   border: 4px solid rgb(0, 0, 0);
@@ -78,6 +78,16 @@ body {
   border-right-color: rgba(119, 89, 89, 1);
   border-left-color: rgba(119, 89, 89, 0.3);
   border-bottom-color: rgba(119, 89, 89, 1);
+}
+
+.piece-cell-light {
+  border: solid white;
+  background-color: rgba(179, 157, 157, 0.8);
+  border: 4px solid rgb(0, 0, 0);
+  border-top-color: rgba(179, 157, 157, 0.3);
+  border-right-color: rgba(179, 157, 157, 1);
+  border-left-color: rgba(179, 157, 157, 0.3);
+  border-bottom-color: rgba(179, 157, 157, 1);
 }
 
 .board {

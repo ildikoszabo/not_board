@@ -14,11 +14,17 @@ export const Board = (props) => {
           className="board-cell"
           onClick={() => props.onClickEmptyCell(i, j)}
         ></div>
+      ) : v.includes("1") ? (
+        <div
+          style={{ width: "10%" }}
+          className={`board-not-cell piece-cell-light`}
+          onClick={() => props.onClickOccupiedCell(i, j, v, "light")}
+        ></div>
       ) : (
         <div
           style={{ width: "10%" }}
-          className="board-not-cell piece-cell"
-          onClick={() => props.onClickOccupiedCell(i, j, v)}
+          className={`board-not-cell piece-cell-dark`}
+          onClick={() => props.onClickOccupiedCell(i, j, v, "dark")}
         ></div>
       );
     });

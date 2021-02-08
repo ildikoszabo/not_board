@@ -8,7 +8,7 @@ export const useGame = (props) => {
     id: props.id,
     player1: null,
     player2: null,
-    currentPlayer: props.player || "player1",
+    currentPlayer: null,
   });
 
   function setPlayer(nr, player) {
