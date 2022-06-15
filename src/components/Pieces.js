@@ -8,7 +8,6 @@ export const PiecesToPlay = ({
   handlePieceSelection,
   rotatePiece,
   handleCardSelection,
-  pieceColor,
 }) => {
   return (
     <div className="table table-cell">
@@ -53,7 +52,7 @@ export const PiecesToPlay = ({
             >
               {mapArrayToGrid(
                 availablePieces[key].shape,
-                `table-cell piece-cell-${pieceColor}`,
+                "table-cell piece-cell",
                 "table-not-cell"
               )}
             </div>

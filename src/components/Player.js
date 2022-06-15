@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import "./../App.css";
 import { useBoard } from "../hooks/useBoard";
 import { getThemeProps } from "@material-ui/styles";
-import { usePieces } from "../hooks/usePieces";
-import { PiecesToPlay } from "../components/Pieces";
 
 import {
   Button,
@@ -26,7 +24,7 @@ export const Player = (props) => {
 
   const handleClose = () => {
     setOpen(false);
-    createPlayer(name, props.pieceColor);
+    createPlayer(name);
   };
 
   return (
@@ -61,12 +59,7 @@ export const Player = (props) => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button
-            type="submit"
-            onClick={handleClose}
-            variant="contained"
-            color="primary"
-          >
+          <Button onClick={handleClose} color="primary">
             Submit
           </Button>
         </DialogActions>

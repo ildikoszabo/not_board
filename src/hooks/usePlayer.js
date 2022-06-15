@@ -6,16 +6,10 @@ export const usePlayer = () => {
   const [player, setPlayer] = useState({
     id: null,
     name: null,
-    pieceColor: "",
   });
 
-  function createPlayer(name, pieceColor) {
-    setPlayer((player) => ({
-      ...player,
-      id: createId(name),
-      name: name,
-      pieceColor: pieceColor,
-    }));
+  function createPlayer(name) {
+    setPlayer((player) => ({ ...player, id: createId(name), name: name }));
   }
 
   /*function setAsCurrentPlayer(newState) {
