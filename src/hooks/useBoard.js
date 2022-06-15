@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { PIECES_LIGHT, PIECES_DARK } from "../pieces";
+import { PIECES } from "../pieces";
 
-export const useBoard = (props) => {
+export const useBoard = (prop) => {
   const [board, setBoard] = useState(createInitBoard());
 
   function addPieceToBoard(pieceMatrix, x, y) {
@@ -62,10 +62,8 @@ export const useBoard = (props) => {
     return false;
   }
 
-  function removePieceFromBoard(x, y, pieceKey, pieceColor) {
-    alert(pieceColor);
-    let pieces = pieceColor === "light" ? PIECES_LIGHT : PIECES_DARK;
-    let pieceMatrix = PIECES_LIGHT[pieceKey].shape;
+  function removePieceFromBoard(x, y, pieceKey) {
+    let pieceMatrix = PIECES[pieceKey].shape;
     let pieceWidth = pieceMatrix[0].length;
     let pieceHeigth = pieceMatrix.length;
     let boardClone = board.slice(0);

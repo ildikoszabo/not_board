@@ -1,21 +1,10 @@
 import React from "react";
 import { useState, useCallback } from "react";
-import { PIECES_LIGHT, PIECES_DARK } from "../pieces";
+import { PIECES } from "../pieces";
 
 export const usePieces = () => {
   const [selectedPieceName, setSelectedPieceName] = useState("cathedral");
-  const [availablePieces, setAvailablePieces] = useState(null);
-  const [pieces, setPieces] = useState(null);
-
-  const setPiecesColor = useCallback((pieceColor) => {
-    if (pieceColor == "light") {
-      setAvailablePieces(PIECES_LIGHT);
-      setPieces(PIECES_LIGHT);
-    } else {
-      setAvailablePieces(PIECES_DARK);
-      setPieces(PIECES_DARK);
-    }
-  });
+  const [availablePieces, setAvailablePieces] = useState(PIECES);
 
   const handlePieceSelection = useCallback((event) => {
     setSelectedPieceName(event.target.value);
@@ -54,7 +43,7 @@ export const usePieces = () => {
       newPiece = availablePieces[pieceKey];
       newPiece.nr = newPiece.nr + 1;
     } else {
-      newPiece = pieces[pieceKey];
+      newPiece = PIECES[pieceKey];
       newPiece.nr = 1;
     }
 
@@ -80,7 +69,7 @@ export const usePieces = () => {
   };
 
   const handleCardSelection = (selectedKey) => {
-    setSelectedPieceName(pieces[selectedKey].name);
+    setSelectedPieceName(PIECES[selectedKey].name);
   };
 
   return [
@@ -92,6 +81,5 @@ export const usePieces = () => {
     removePieceFromPieces,
     addPieceToPieces,
     handleCardSelection,
-    setPiecesColor,
   ];
 };
